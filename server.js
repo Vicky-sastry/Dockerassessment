@@ -9,8 +9,8 @@ const HOST = 'localhost';
 // App
 const app = express();
 app.get('/', (req, res) => {
-  res.send('Hello World, This is my first nodejs application with docker');
+  res.send('Hello World, This is myfirst nodejs application with docker');
 });
 
 app.listen(PORT, HOST);
-console.log(`Running on http://${HOST}:${PORT}`);
+console.log(`Hello World, This is my first nodejs application with docker`);
