@@ -1,0 +1,65 @@
+2. Docker container is not starting.
+
+        1. A container with same name already exists.
+        2. Not enough space on the device.
+        3. Port is already allocated to another service
+        4. Docker daemon stopped working.
+        5. User does not have enough permissions to the directory.
+        6. Proxy is not setup with docker registry.
+        7. Container build cache.
+        8. Running too many services in the same container.
+
+ 
+
+ 
+
+mkdir docker
+cp Dockerfile ./docker
+cd docker
+git init
+git commit -am "Dockerfile added"
+git push origin master
+docker build -f Dockerfile -t test:0.1 .
+docker push test:0.1
+ 
+
+ 
+
+Why Docker Push fails?
+
+    1. Authentication issue
+    2. Access denied to docker hub
+    3. Wrong tags being provided
+    4. Docker push halts without an error because of incorrect urls/image being timed out--> restarting docker helps
+    5. Having any thing like .,! may show it as a invalid tag so the image does not push
+    6. Docker push can fail if we provide an improper secret_key/not providing any secret_key in the configuration
+    7. In the Jenkins credentials, credentials might not be added properly
+    8. In Jenkins file the stage may not be correct(syntax errors) or the proper credential name not specified
+    9. Directly using the login credentials, without using "with credentials"
+    10. Registry URL can be incorrect
+    11. Docker pipeline plugin may not be installed.
+
+ 
+
+               
+
+Build failure due to connectivity issue
+
+    1. Build failure analyzer to analyze the exact issue
+    2. Checking whether the credentials are properly configured
+    3. Checing whether the required plugins for the required tools are correctly installed
+    4. In case of master-slave configuration check whether master and slave are properly configured
+    5. Check whether the apis written are properly working.
+    6. Check whether the configured secret-token got expired.
+
+               
+
+               
+
+Docker container failing
+
+    1. docker stats <container id> --> when we are using any metrics, and they show how the error occured
+    2. docker logs <container id> --> basic command which shows all i/p o/p and errors of a container
+    3. docker exec -it <container_id> /bin/bash --> go inside a container and debug
+    4. docker commit <container_id> my-broken-container && docker run -it my-broken-container /bin/bash --> if we cant really start a container
+    5. docker cp <container_id>:/pathinserver /local-path --> to save the container log locally and debug the issue.
