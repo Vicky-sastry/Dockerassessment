@@ -5,7 +5,7 @@ Part A
         1. Created a nodejs app, opened a port and run it from our machine
         2. Exposed a port 8080
         3. When we build the image we use 
-        “docker build –f Dockerfile.txt –t nodeapp .”
+        “docker build –f Dockerfile –t nodejsapp .”
         When we run the image , we map the port with 8080 in our local machine.
         “docker run –d –p 5432:8080 –name nodejsapp  nodejsapp:latest”
         The repository in Github: https://github.com/Vicky-sastry/Dockerassessment.git
