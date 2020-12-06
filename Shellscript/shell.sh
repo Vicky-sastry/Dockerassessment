@@ -1,4 +1,4 @@
-mkdir docker
+mkdir dockerabcshell
 cp Dockerfile ./docker/Dockerfile
 cd docker
 docker build -f Dockerfile -t test:1 .
