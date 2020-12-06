@@ -1,5 +1,17 @@
-2. Docker container is not starting.
+DOCKERS 
+Part A
+    1. With minimal possible layers to install Web Services and expose appropriate http port for accessing:
 
+        1. Created a nodejs app, opened a port and run it from our machine
+        2. Exposed a port 8080
+        3. When we build the image we use 
+        “docker build –f Dockerfile.txt –t nodeapp .”
+        When we run the image , we map the port with 8080 in our local machine.
+        “docker run –d –p 5432:8080 –name nodejsapp  nodejsapp:latest”
+        The repository in Github: https://github.com/Vicky-sastry/Dockerassessment.git
+
+
+    2. Docker Container is not Starting
         1. A container with same name already exists.
         2. Not enough space on the device.
         3. Port is already allocated to another service
@@ -9,57 +21,61 @@
         7. Container build cache.
         8. Running too many services in the same container.
 
- 
+PART B
+    1.Using shell command search for a particular pattern (of your choice) to search Docker logs using awk command
+        Awk command can be used to find a particular pattern in logs.For instance “docker logs test | awk '/add/ {print}'” formats the logs of the container and prints only the lines containing ‘add’. 
 
- 
+    2. Execute a shell command inside a container to search for a file.
+        To execute find command inside a running container
+        “docker exec –it <container name> find / -name <filename>”
+         docker exec –it command is used to run a command in a running container without opening a bash interactive terminal.Here “/” after the find command implies that find the file from root directory.-name tag is used to specify filename / directory name
+         If we want to get an interactive terminal, run the same command as follows.
+        “docker exec –it <container name> find / -name <filename> /bin/bash”
 
-mkdir docker
-cp Dockerfile ./docker
-cd docker
-git init
-git commit -am "Dockerfile added"
-git push origin master
-docker build -f Dockerfile -t test:0.1 .
-docker push test:0.1
- 
+JENKINS
+PART A
+    1. There is a Jenkins pipeline failure the failure error at the outset suggest that build has failed and one of the tool used for the build is running inside the container – what are the commands you will use for debugging the issue
 
- 
+        1. docker stats <container id> --> when we are using any metrics, and they show how the error occured
+        2. docker logs <container id> --> basic command which shows all i/p o/p and errors of a container
+        3. docker exec -it <container_id> /bin/bash --> go inside a container and debug
+        4. docker commit <container_id> my-broken-container && docker run -it my-broken-container /bin/bash --> if we cant really start a container
+        5. docker cp <container_id>:/pathinserver /local-path --> to save the container log locally and debug the issue.
 
-Why Docker Push fails?
+    2. There is a build failure due to connectivity issue with one of the tools – what actions you will take to narrow down the issue.
 
-    1. Authentication issue
-    2. Access denied to docker hub
-    3. Wrong tags being provided
-    4. Docker push halts without an error because of incorrect urls/image being timed out--> restarting docker helps
-    5. Having any thing like .,! may show it as a invalid tag so the image does not push
-    6. Docker push can fail if we provide an improper secret_key/not providing any secret_key in the configuration
-    7. In the Jenkins credentials, credentials might not be added properly
-    8. In Jenkins file the stage may not be correct(syntax errors) or the proper credential name not specified
-    9. Directly using the login credentials, without using "with credentials"
-    10. Registry URL can be incorrect
-    11. Docker pipeline plugin may not be installed.
+        1. Build failure analyzer to analyze the exact issue
+        2. Checking whether the credentials are properly configured
+        3. Checing whether the required plugins for the required tools are correctly installed
+        4. In case of master-slave configuration check whether master and slave are properly configured
+        5. Check whether the apis written are properly working.
+        6. Check whether the configured secret-token got expired.
 
- 
+
+    3. Why Docker Push fails?
+
+        1. Authentication issue
+        2. Access denied to docker hub
+        3. Wrong tags being provided
+        4. Docker push halts without an error because of incorrect urls/image being timed out--> restarting docker helps
+        5. Having any thing like .,! may show it as a invalid tag so the image does not push
+        6. Docker push can fail if we provide an improper secret_key/not providing any secret_key in the configuration
+        7. In the Jenkins credentials, credentials might not be added properly
+        8. In Jenkins file the stage may not be correct(syntax errors) or the proper credential name not specified
+        9. Directly using the login credentials, without using "with credentials"
+        10. Registry URL can be incorrect
+        11. Docker pipeline plugin may not be installed.
+
+    4. Write a shell script to setup git repo, docker build, push image to docker repository.
+        Clone the shell script and give executable permissions to the file
+        The repository in github: https://github.com/Vicky-sastry/Dockerassessment/tree/master/Shellscript.git
+        Give chmod +x <filename> to execute a shellscript.
 
                
 
-Build failure due to connectivity issue
 
-    1. Build failure analyzer to analyze the exact issue
-    2. Checking whether the credentials are properly configured
-    3. Checing whether the required plugins for the required tools are correctly installed
-    4. In case of master-slave configuration check whether master and slave are properly configured
-    5. Check whether the apis written are properly working.
-    6. Check whether the configured secret-token got expired.
 
                
 
                
 
-Docker container failing
-
-    1. docker stats <container id> --> when we are using any metrics, and they show how the error occured
-    2. docker logs <container id> --> basic command which shows all i/p o/p and errors of a container
-    3. docker exec -it <container_id> /bin/bash --> go inside a container and debug
-    4. docker commit <container_id> my-broken-container && docker run -it my-broken-container /bin/bash --> if we cant really start a container
-    5. docker cp <container_id>:/pathinserver /local-path --> to save the container log locally and debug the issue.
